@@ -11,9 +11,11 @@ import UIKit
 class ViewController: UIViewController
  {
     @IBOutlet weak var display: UILabel!
+
+    @IBOutlet weak var history: UILabel!
     
     var userIsInTheMiddleOfTypingANumber = false
-
+    var operandStack = Array<Double>()
 
     @IBAction func appendDigit(sender: UIButton) {
         let digit = sender.currentTitle!
@@ -37,6 +39,12 @@ class ViewController: UIViewController
         
         if userIsInTheMiddleOfTypingANumber {
             enter()
+        }
+        
+        // If user types operation as first entry, 
+        // won't display it in history
+        if history.text != nil {
+            history.text = history.text! + " " + operation
         }
         
         switch operation {
@@ -78,9 +86,14 @@ class ViewController: UIViewController
         return op1 * op2
     }
     
-    var operandStack = Array<Double>()
-    
     @IBAction func enter() {
+        
+        if history.text == nil {
+            history.text = display.text!
+        } else {
+            history.text = history.text! + " " + display.text!
+        }
+        
         userIsInTheMiddleOfTypingANumber = false
         operandStack.append(displayValue)
         println("operandStack = \(operandStack)")
