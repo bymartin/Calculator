@@ -24,9 +24,20 @@ class ViewController: UIViewController
         operandStack = []
     }
     
+    @IBAction func backspace() {
+        if userIsInTheMiddleOfTypingANumber {
+            let currentDisplay = display.text!
+            if countElements(currentDisplay) > 1 {
+                display.text = dropLast(currentDisplay)
+            } else {
+                display.text = "0"
+            }
+        }
+    }
+    
     @IBAction func appendDigit(sender: UIButton) {
         let digit = sender.currentTitle!
-        if userIsInTheMiddleOfTypingANumber {
+        if userIsInTheMiddleOfTypingANumber && display.text != "0" {
             // If user types a . for a floating point number,
             // make sure there isn't already a "." present
             // If so, just return
