@@ -40,11 +40,14 @@ class ViewController: UIViewController
         }
         
         switch operation {
-        case "×": performOperation { $0 * $1 }
-        case "÷": performOperation { $1 / $0 }
-        case "+": performOperation { $0 + $1 }
-        case "−": performOperation { $1 - $0 }
-        case "√": performOperation { sqrt($0) }
+        case "×":   performOperation { $0 * $1 }
+        case "÷":   performOperation { $1 / $0 }
+        case "+":   performOperation { $0 + $1 }
+        case "−":   performOperation { $1 - $0 }
+        case "√":   performOperation { sqrt($0) }
+        case "sin": performOperation { sin($0) }
+        case "cos": performOperation { cos($0) }
+        case "∏":   appendConstant(M_PI)
         default: break
         }
     }
@@ -61,6 +64,14 @@ class ViewController: UIViewController
             displayValue = operation(operandStack.removeLast())
             enter()
         }
+    }
+    
+    func appendConstant(constant: Double) {
+        if userIsInTheMiddleOfTypingANumber {
+            enter()
+        }
+        display.text = "\(constant)"
+        enter()
     }
     
     func multiply(op1: Double, op2: Double) -> Double {
