@@ -17,6 +17,13 @@ class ViewController: UIViewController
     var userIsInTheMiddleOfTypingANumber = false
     var operandStack = Array<Double>()
 
+    @IBAction func clear() {
+        display.text = "0"
+        history.text = ""
+        userIsInTheMiddleOfTypingANumber = false
+        operandStack = []
+    }
+    
     @IBAction func appendDigit(sender: UIButton) {
         let digit = sender.currentTitle!
         if userIsInTheMiddleOfTypingANumber {
