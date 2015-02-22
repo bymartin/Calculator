@@ -18,6 +18,12 @@ class ViewController: UIViewController
     @IBAction func appendDigit(sender: UIButton) {
         let digit = sender.currentTitle!
         if userIsInTheMiddleOfTypingANumber {
+            // If user types a . for a floating point number,
+            // make sure there isn't already a "." present
+            // If so, just return
+            if digit == "." && display.text!.rangeOfString(".") != nil {
+                return
+            }
             display.text = display.text! + digit
         } else {
             display.text = digit

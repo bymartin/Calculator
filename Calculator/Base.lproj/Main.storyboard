@@ -126,9 +126,12 @@
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="av7-XS-zju">
                                 <rect key="frame" x="24" y="467" width="104" height="125"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="24"/>
-                                <state key="normal">
+                                <state key="normal" title=".">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <action selector="appendDigit:" destination="BYZ-38-t0r" eventType="touchUpInside" id="RPs-7r-Cnv"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ahs-Ts-0pR">
                                 <rect key="frame" x="248" y="467" width="104" height="125"/>
@@ -170,16 +173,6 @@
                                     <action selector="operate:" destination="BYZ-38-t0r" eventType="touchUpInside" id="I35-7m-JEL"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yvg-p5-smG">
-                                <rect key="frame" x="472" y="334" width="104" height="125"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="24"/>
-                                <state key="normal">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="operate:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Bpr-5u-va9"/>
-                                </connections>
-                            </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TNZ-dz-num">
                                 <rect key="frame" x="360" y="467" width="104" height="125"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="24"/>
@@ -218,6 +211,16 @@
                                 </state>
                                 <connections>
                                     <action selector="operate:" destination="BYZ-38-t0r" eventType="touchUpInside" id="typ-bP-YQT"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yvg-p5-smG">
+                                <rect key="frame" x="472" y="334" width="104" height="125"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="24"/>
+                                <state key="normal">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="operate:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Bpr-5u-va9"/>
                                 </connections>
                             </button>
                         </subviews>
