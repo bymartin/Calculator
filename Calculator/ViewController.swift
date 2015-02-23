@@ -29,7 +29,7 @@ class ViewController: UIViewController
             let currentDisplay = display.text!
             if countElements(currentDisplay) > 1 {
                 display.text = dropLast(currentDisplay)
-            } else {
+             } else {
                 display.text = "0"
             }
         }
@@ -37,6 +37,7 @@ class ViewController: UIViewController
     
     @IBAction func appendDigit(sender: UIButton) {
         let digit = sender.currentTitle!
+        
         if userIsInTheMiddleOfTypingANumber && display.text != "0" {
             // If user types a . for a floating point number,
             // make sure there isn't already a "." present
@@ -44,7 +45,8 @@ class ViewController: UIViewController
             if digit == "." && display.text!.rangeOfString(".") != nil {
                 return
             }
-            display.text = display.text! + digit
+            if digit == "0" && display.text! == "-0" { return }
+        display.text = display.text! + digit
         } else {
             display.text = digit
             userIsInTheMiddleOfTypingANumber = true
@@ -56,6 +58,21 @@ class ViewController: UIViewController
         let operation = sender.currentTitle!
         
         if userIsInTheMiddleOfTypingANumber {
+            
+            // Handle special case of +/- when user is in the middle
+            // of typing a number, in this case we don't want to 
+            // enter(), we must change the sign and allow the user
+            // to continue typing the number.
+            if operation == "±" {
+                let displayText = display.text!
+                // If there is already a "-", take it off (now +)
+                if displayText.rangeOfString("-") != nil {
+                    display.text = dropFirst(displayText)
+                } else {
+                    display.text = "-" + displayText
+                }
+                return
+            }
             enter()
         }
         
@@ -74,6 +91,7 @@ class ViewController: UIViewController
         case "sin": performOperation { sin($0) }
         case "cos": performOperation { cos($0) }
         case "π":   appendConstant( M_PI )
+        case "±":   performOperation { -$0 }
         default: break
         }
     }
