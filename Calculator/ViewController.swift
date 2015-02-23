@@ -131,18 +131,30 @@ class ViewController: UIViewController
         }
         
         userIsInTheMiddleOfTypingANumber = false
-        operandStack.append(displayValue)
+        operandStack.append(displayValue!)
         println("operandStack = \(operandStack)")
     }
     
-    var displayValue: Double {
+    var displayValue: Double? {
         get {
-            // Need to figure out what below does!
-            return NSNumberFormatter().numberFromString(display.text!)!.doubleValue
+            // optional binding, below is only true if display.text returns String and
+            // not String?, displayText is implicitly unwrapped for use within
+            if let displayText = display.text {
+                // we have valid text, now check if it is a number
+                if let displayNumber = NSNumberFormatter().numberFromString(displayText) {
+                    return displayNumber.doubleValue
+                }
+            }
+            return nil
+            
         }
         set {
             // magic newValue when displayValue is set
-            display.text = "\(newValue)"
+            if newValue != nil {
+                display.text = "\(newValue!)"
+            } else {
+                display.text = "0"
+            }
             userIsInTheMiddleOfTypingANumber = false
             // display value is set when an operation button is pressed
             // so add "==" to end of the history label
