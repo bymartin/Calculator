@@ -126,6 +126,11 @@ class ViewController: UIViewController
             // magic newValue when displayValue is set
             display.text = "\(newValue)"
             userIsInTheMiddleOfTypingANumber = false
+            // display value is set when an operation button is pressed
+            // so add "==" to end of the history label
+            if history.text != nil {
+                history.text = history.text! + " ="
+            }
         }
     }
     
