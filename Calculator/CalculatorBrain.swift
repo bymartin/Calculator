@@ -86,17 +86,24 @@ class CalculatorBrain
         }
     }
     
+    func popOperand() -> Double? {
+        if !opStack.isEmpty {
+            opStack.removeLast()
+        }
+        return evaluate()
+    }
+    
     // Describe the contents of the brain as a String
     // While there is some stack left that has not been described, call the method
     // description to process the remaining stack
     var description: String {
         get {
             var (result, ops) = ("", opStack)
-            do {
+            while ops.count > 0 {
                 var current: String?
                 (current, ops) = description(ops)
                 result = result == "" ? current! : "\(current!), \(result)"
-            } while ops.count > 0
+            }
             return result
         }
     }

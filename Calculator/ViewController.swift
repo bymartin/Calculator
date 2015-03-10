@@ -33,6 +33,13 @@ class ViewController: UIViewController
              } else {
                 display.text = "0"
             }
+        } else {
+            // make key act as undo
+            if let result = brain.popOperand() {
+                displayValue = result
+            } else {
+                displayValue = nil
+            }
         }
     }
     
