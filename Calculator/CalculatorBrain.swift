@@ -86,6 +86,58 @@ class CalculatorBrain
         }
     }
     
+    // Describe the contents of the brain as a String
+    // While there is some stack left that has not been described, call the method
+    // description to process the remaining stack
+    var description: String {
+        get {
+            var (result, ops) = ("", opStack)
+            do {
+                var current: String?
+                (current, ops) = description(ops)
+                result = result == "" ? current! : "\(current!), \(result)"
+            } while ops.count > 0
+            return result
+        }
+    }
+    
+    private func description(ops: [Op]) -> (result: String?, remainingOps: [Op]) {
+        if !ops.isEmpty {
+            var remainingOps = ops
+            // start with last element
+            let op = remainingOps.removeLast()
+            
+            switch op {
+            case .Operand(let operand):
+                // %g removes trailing zeroes
+                return (String(format: "%g", operand) , remainingOps)
+            case .NullaryOperation(let symbol, _):
+                return (symbol, remainingOps);
+            case .UnaryOperation(let symbol, _):
+                let operandEvaluation = description(remainingOps)
+                if let operand = operandEvaluation.result {
+                    return ("\(symbol)(\(operand))", operandEvaluation.remainingOps)
+                }
+            case .BinaryOperation(let symbol, _):
+                let op1Evaluation = description(remainingOps)
+                if var operand1 = op1Evaluation.result {
+                    if remainingOps.count - op1Evaluation.remainingOps.count > 2 {
+                        operand1 = "(\(operand1))"
+                    }
+                    let op2Evaluation = description(op1Evaluation.remainingOps)
+                    if let operand2 = op2Evaluation.result {
+                        return ("\(operand2) \(symbol) \(operand1)", op2Evaluation.remainingOps)
+                    }
+                }
+            case .Variable(let symbol):
+                return (symbol, remainingOps)
+            }
+        }
+        return ("?", ops)
+    }
+
+
+    
     
     private func evaluate(ops: [Op]) -> (result: Double?, remainingOps: [Op])
     {

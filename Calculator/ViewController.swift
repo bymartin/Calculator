@@ -51,7 +51,11 @@ class ViewController: UIViewController
         } else {
             display.text = digit
             userIsInTheMiddleOfTypingANumber = true
-            history.text = brain.showStack()
+            if brain.description != "?" {
+                history.text = brain.description
+            } else {
+                history.text = ""
+            }
         }
         
     }
@@ -133,25 +137,8 @@ class ViewController: UIViewController
                 display.text = "0"
             }
             userIsInTheMiddleOfTypingANumber = false
-            let stack = brain.showStack()
-            
-            if !stack!.isEmpty {
-                
-                //history.text = join(decimalSeparator, stack!.componentsSeparatedByString(".")) + " ="
-                history.text = stack! + " ="
-                
-            }
-
-            
-            // display value is set when an operation button is pressed
-            // so add "==" to end of the history label
-//            if history.text != nil {
-//                history.text = history.text! + " ="
-//            }
-
+            history.text = brain.description + " ="
         }
     }
-    
-
 }
 
