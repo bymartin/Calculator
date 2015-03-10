@@ -15,6 +15,7 @@ class CalculatorBrain
         case UnaryOperation(String, Double -> Double)
         case BinaryOperation(String, (Double, Double) -> Double)
         case NullaryOperation(String, () -> Double)
+        case Variable(String)
         
         // Add computed property to allow to print as string
         var description: String {
@@ -28,6 +29,8 @@ class CalculatorBrain
                     return symbol
                 case .NullaryOperation(let symbol, _):
                     return symbol
+                case .Variable(let symbol):
+                    return symbol
                 }
         
             }
@@ -37,6 +40,8 @@ class CalculatorBrain
     private var opStack = [Op]()
     
     private var knownOps = [String:Op]()
+    
+    var variableValues = [String:Double]()
     
     init() {
         func learnOp(op: Op) {
@@ -105,6 +110,8 @@ class CalculatorBrain
                 }
             case .NullaryOperation(_ , let operation):
                 return (operation(), remainingOps)
+            case .Variable(let symbol):
+                return (variableValues[symbol], remainingOps)
             }
         }
         return (nil, ops)
@@ -118,6 +125,11 @@ class CalculatorBrain
     
     func pushOperand(operand: Double) -> Double? {
         opStack.append(Op.Operand(operand))
+        return evaluate()
+    }
+    
+    func pushOperand(symbol: String) -> Double? {
+        opStack.append(Op.Variable(symbol))
         return evaluate()
     }
     
