@@ -140,5 +140,34 @@ class ViewController: UIViewController
             history.text = brain.description + " ="
         }
     }
+    
+    @IBAction func saveMemory(sender: UIButton) {
+        // get variable from the button title
+        if let variable = last(sender.currentTitle!) {
+            // Make sure there is a value on the display to set
+            if displayValue != nil {
+                brain.variableValues["\(variable)"] = displayValue
+                if let result = brain.evaluate() {
+                    displayValue = result
+                } else {
+                    displayValue = nil
+                }
+            }
+        }
+        userIsInTheMiddleOfTypingANumber = false
+    }
+
+    @IBAction func loadMemory(sender: UIButton) {
+        // first check if user was typing a number and hit enter
+        if userIsInTheMiddleOfTypingANumber {
+            enter()
+        }
+        if let result = brain.pushOperand(sender.currentTitle!) {
+            displayValue = result
+        } else {
+            displayValue = nil
+        }
+    }
+    
 }
 
